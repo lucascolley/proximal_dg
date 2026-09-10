@@ -15,8 +15,10 @@ class JacobianVectorProduct(linalg.LinearOperator):
             self.grad = torch.cat(grad)
         elif isinstance(grad, torch.Tensor):
             self.grad = grad.view(-1)
-        self.shape = (self.grad.size(0), self.grad.size(0))
-        self.dtype = np.dtype('Float32')
+        super().__init__(
+            dtype=np.dtype('Float32'),
+            shape=(self.grad.size(0), self.grad.size(0))
+        )
         self.params = params
 
     def _matvec(self, v):
